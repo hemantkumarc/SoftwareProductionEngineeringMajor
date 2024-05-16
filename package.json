@@ -1,0 +1,22 @@
+{
+  "name": "spe-major-project",
+  "version": "1.0.0",
+  "description": "learning how to build an end to end devops pipeline for the course project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hemantkumarc/SoftwareProductionEngineeringMajor.git"
+  },
+  "author": "Hemant Kumar and Karnadevsinh Zala",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hemantkumarc/SoftwareProductionEngineeringMajor/issues"
+  },
+  "homepage": "https://github.com/hemantkumarc/SoftwareProductionEngineeringMajor#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
