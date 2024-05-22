@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coursemap-frontend-deployment
+  namespace: coursemap
+  labels:
+    app: coursemap-frontend
+spec:
+  # Check if we can increase the number of replicas
+  # Specify resource limits, so that the pod does not consume all the resources
+  # Specify strategy for rolling updates
+  # Specify environment variables from configMaps
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: coursemap-frontend
+  template:
+    metadata:
+      labels:
+        app: coursemap-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: hemantkumarcpersonal/coursemap-frontend:latest
+        ports:
+        - containerPort: 3000
+        imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: coursemap-frontend-service
+  namespace: coursemap
+spec:
+  selector:
+    app: coursemap-frontend
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
