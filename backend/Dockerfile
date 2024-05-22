@@ -5,3 +5,4 @@ COPY ./package-lock.json /backend
 RUN npm ci
 COPY . /backend
 EXPOSE 5000
+CMD ["node", "index.js"]
