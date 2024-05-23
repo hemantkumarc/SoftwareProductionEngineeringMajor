@@ -32,7 +32,7 @@ function LoginTerminal() {
   };
 
   const submitData = () => {
-    axios.post('http://localhost:3898/signup', {
+    axios.post('http://coursemap-backend-service:5000/signup', {
         username: email,
         password: password,
         name: name
