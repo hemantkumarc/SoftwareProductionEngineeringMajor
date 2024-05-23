@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-const dbURI = 'mongodb://mongodb-service:27017/mydatabase';
+// const dbURI = 'mongodb://mongodb-service:27017/mydatabase';
+const dbURI = process.env.MONGO_URI;
 
 // mongoose.connect('mongodb://host.docker.internal:27017/CourseMap?directConnection=true', {
 //   useNewUrlParser: true,
