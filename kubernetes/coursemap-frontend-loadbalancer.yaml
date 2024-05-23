@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: coursemap-frontend-loadbalancer
+  namespace: coursemap
+spec:
+  type: LoadBalancer
+  selector:
+    app: coursemap-frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
