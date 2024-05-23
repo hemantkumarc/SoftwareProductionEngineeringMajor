@@ -5,4 +5,4 @@ metadata:
   namespace: coursemap
 data:
   PORT: '5000'
-  MONGO_URI: mongodb+srv://hemantkumarcpersonal:hemantkumarcpersonal@mongo-coursemap.yzksjcn.mongodb.net/?retryWrites=true&w=majority&appName=mongo-coursemap&directConnection=true&ssl=true
+  MONGO_URI: mongodb+srv://hemantkumarcpersonal:hemantkumarcpersonal@mongo-coursemap.yzksjcn.mongodb.net/CourseMap?retryWrites=true&w=majority&appName=mongo-coursemap&ssl=true
