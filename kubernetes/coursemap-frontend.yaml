@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: hemantkumarcpersonal/coursemap-frontend:latest
+        image: hemantkumarcpersonal/frontend:latest
         ports:
         - containerPort: 3000
         imagePullPolicy: Always
