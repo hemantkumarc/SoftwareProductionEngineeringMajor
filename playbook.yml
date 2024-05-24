@@ -33,6 +33,7 @@
       debug:
         var: gke_cluster
 
+        
     # - name: Ensure gcloud SDK is installed
     #   ansible.builtin.command:
     #     cmd: curl https://sdk.cloud.google.com | bash
