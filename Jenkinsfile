@@ -56,7 +56,6 @@ pipeline {
 
 				script {
 					docker.withRegistry('', 'dockerhub-credentials') {
-						// sh "docker image tag calculator hemantkumarcpersonal/calculator:latest"
 						sh "docker push hemantkumarcpersonal/${FRONTEND_DOCKER_IMAGE_NAME}:latest"
                         sh "docker push hemantkumarcpersonal/${BACKEND_DOCKER_IMAGE_NAME}:latest"
 					}
@@ -71,9 +70,9 @@ pipeline {
 				script {
 
 					ansiblePlaybook (
-
 						playbook: 'playbook.yml',
-						inventory: 'inventory.ini'
+						inventory: 'inventory.ini',
+                        colorized: true
 					)
 				}
 			}
