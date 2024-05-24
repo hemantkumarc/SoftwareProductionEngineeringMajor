@@ -29,7 +29,7 @@ function SignInTerminal() {
 
   const submitData = () => {
     axios
-      .post("http://34.171.183.58:30036/login", {
+      .post("http://34.171.183.58:31995/login", {
         username: email,
         password: password,
       })
