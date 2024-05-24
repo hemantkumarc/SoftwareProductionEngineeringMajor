@@ -74,6 +74,7 @@ pipeline {
 					// 	inventory: 'inventory.ini',
                     //     colorized: true
 					// )
+                    
                     withCredentials([file(credentialsId: 'gcp-service-account-file', variable: 'GCP_CREDENTIALS')]) {
                         // env.GOOGLE_APPLICATION_CREDENTIALS = GCP_CREDENTIALSs
                         ansiblePlaybook(
