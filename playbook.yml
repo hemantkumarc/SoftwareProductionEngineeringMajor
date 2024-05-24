@@ -55,7 +55,7 @@
 
     # - name: Delete existing frontend configmap
     #   kubernetes.core.k8s:
-    #     kubeconfig: ~/config
+    #     kubeconfig: ~/config 
     #     src: ./
     #     state: absent
 
