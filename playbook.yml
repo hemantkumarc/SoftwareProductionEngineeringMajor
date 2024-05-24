@@ -14,54 +14,102 @@
         service_account_file: "~/gke-cluster-coursemap-4fec645c7f77.json"
       register: gke_cluster
     
-    - name: Display the output of the task above
+    - name: Output of the above task
       debug:
         var: gke_cluster
-
-    # - name: Delete existing config map
-    #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-configmap-backend.yaml') | from_yaml }}"
-    #     state: absent
-
-    # - name: Create backend config map
-    #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-configmap-backend.yaml') | from_yaml }}"
-    #     state: present
+    
+    - name: Ensure that namespace is coursemap
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-namespace.yaml
+        state: present
 
     # - name: Delete existing backend secret
     #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-secret-backend.yaml') | from_yaml }}"
+    #     src: ./
     #     state: absent
+
+    - name: Delete existing backend configmap
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-backend-configmap.yaml
+        state: absent
+        namespace: coursemap
+
+    # - name: Delete existing frontend configmap
+    #   kubernetes.core.k8s:
+    #     src: ./
+    #     state: absent
+
+    - name: Delete existing backend deployment
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-backend.yaml
+        state: absent
+        namespace: coursemap
+
+    - name: Delete existing frontend deployment
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-frontend.yaml
+        state: absent
+        namespace: coursemap
+
+    - name: Delete existing backend nodeport service
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-backend-nodeport.yaml
+        state: absent
+        namespace: coursemap
+    
+    - name: Delete existing frontend loadbalancer service
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-frontend.yaml
+        state: absent
+        namespace: coursemap
+
+# From here onwards, we will create all the resources needed for the application
 
     # - name: Create backend secret
     #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-secret-backend.yaml') | from_yaml }}"
+    #     src: ./
     #     state: present
+    #     apply: yes
+    #     namespace: coursemap
 
-    # - name: Delete existing backend deployment
-    #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-deploy-backend.yaml') | from_yaml }}"
-    #     state: absent
+    - name: Create backend configmap
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-backend-configmap.yaml
+        state: present
+        apply: yes
+        namespace: coursemap
 
-    # - name: Create backend deployment
+    # - name: Create frontend configmap
     #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-deploy-backend.yaml') | from_yaml }}"
+    #     src: ./
     #     state: present
+    #     apply: yes
+    #     namespace: coursemap
 
-    # - name: Delete existing backend service
-    #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-service-backend.yaml') | from_yaml }}"
-    #     state: absent
+    - name: Create backend deployment
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-backend.yaml
+        state: present
+        apply: yes
+        namespace: coursemap
 
-    # - name: Create backend service
-    #   kubernetes.core.k8s:
-    #     kubeconfig: /path/to/your/kubeconfig
-    #     definition: "{{ lookup('file', './k8s-config/k8s-service-backend.yaml') | from_yaml }}"
-    #     state: present
+    - name: Create frontend deployment
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-frontend.yaml
+        state: present
+        apply: yes
+        namespace: coursemap
+
+    - name: Create backend nodeport service
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-backend-nodeport.yaml
+        state: present
+        apply: yes
+        namespace: coursemap
+    
+    - name: Create existing frontend loadbalancer service
+      kubernetes.core.k8s:
+        src: ./kubernetes/coursemap-frontend.yaml
+        state: present
+        apply: yes
+        namespace: coursemap
