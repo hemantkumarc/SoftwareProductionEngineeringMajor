@@ -26,7 +26,8 @@
         state: present
         project: gke-cluster-coursemap
         auth_kind: serviceaccount
-        service_account_file: "~/gke-cluster-coursemap-4fec645c7f77.json"
+        #service_account_file: "~/gke-cluster-coursemap-4fec645c7f77.json"
+        service_account_file: "{{ service_account_file }}"
       register: gke_cluster
     
     - name: Output of the above task

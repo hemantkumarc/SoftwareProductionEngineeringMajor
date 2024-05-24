@@ -69,11 +69,23 @@ pipeline {
 
 				script {
 
-					ansiblePlaybook (
-						playbook: 'playbook.yml',
-						inventory: 'inventory.ini',
-                        colorized: true
-					)
+					// ansiblePlaybook (
+					// 	playbook: 'playbook.yml',
+					// 	inventory: 'inventory.ini',
+                    //     colorized: true
+					// )
+                    withCredentials([file(credentialsId: 'gcp-service-account-file', variable: 'GCP_CREDENTIALS')]) {
+                        // env.GOOGLE_APPLICATION_CREDENTIALS = GCP_CREDENTIALSs
+                        ansiblePlaybook(
+                            playbook: 'playbook.yml',
+                            inventory: 'inventory.ini',
+                            extraVars: [
+                                "service_account_file=${GCP_CREDENTIALS}",
+                                // "kubeconfig=${KUBECONFIG_FILE}"
+                            ]
+                        )
+                    }
+
 				}
 			}
 		}
