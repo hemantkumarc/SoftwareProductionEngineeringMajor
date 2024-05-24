@@ -41,11 +41,10 @@ pipeline {
 
 				script {
                     sh "cd ./frontend"
-					docker.build("${FRONTEND_DOCKER_IMAGE_NAME}", '.')
+					docker.build("${FRONTEND_DOCKER_IMAGE_NAME}", 'frontend')
                     sh "docker image tag ${FRONTEND_DOCKER_IMAGE_NAME} hemantkumarcpersonal/${FRONTEND_DOCKER_IMAGE_NAME}:latest"
                     
-                    sh "cd ./backend"
-                    docker.build("${BACKEND_DOCKER_IMAGE_NAME}", '.')
+                    docker.build("${BACKEND_DOCKER_IMAGE_NAME}", 'backend')
                     sh "docker image tag ${BACKEND_DOCKER_IMAGE_NAME} hemantkumarcpersonal/${BACKEND_DOCKER_IMAGE_NAME}:latest"
 				}
 			}
