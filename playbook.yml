@@ -3,62 +3,65 @@
   hosts: localhost
   remote_user: hemant
   tasks:
-    - name: Install required collections
-      ansible.builtin.command:
-        cmd: ansible-galaxy collection install kubernetes.core google.cloud
 
     - name: Ensure GKE cluster is present
       google.cloud.gcp_container_cluster:
-        name: your-cluster-name
-        zone: your-cluster-zone
+        name: coursemap-cluster-two
+        zone: us-central1-c
         state: present
-        project: your-gcp-project-id
-        credentials_file: /path/to/your/service-account.json
+        project: gke-cluster-coursemap
+        auth_kind: serviceaccount
+        service_account_file: "~/gke-cluster-coursemap-4fec645c7f77.json"
+      register: gke_cluster
+    
+    - name: Display the output of the task above
+      debug:
+        var: gke_cluster
 
-    - name: Delete existing config map
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-configmap-backend.yaml') | from_yaml }}"
-        state: absent
+    # - name: Delete existing config map
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-configmap-backend.yaml') | from_yaml }}"
+    #     state: absent
 
-    - name: Create backend config map
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-configmap-backend.yaml') | from_yaml }}"
-        state: present
+    # - name: Create backend config map
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-configmap-backend.yaml') | from_yaml }}"
+    #     state: present
 
-    - name: Delete existing backend secret
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-secret-backend.yaml') | from_yaml }}"
-        state: absent
+    # - name: Delete existing backend secret
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-secret-backend.yaml') | from_yaml }}"
+    #     state: absent
 
-    - name: Create backend secret
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-secret-backend.yaml') | from_yaml }}"
-        state: present
+    # - name: Create backend secret
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-secret-backend.yaml') | from_yaml }}"
+    #     state: present
 
-    - name: Delete existing backend deployment
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-deploy-backend.yaml') | from_yaml }}"
-        state: absent
+    # - name: Delete existing backend deployment
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-deploy-backend.yaml') | from_yaml }}"
+    #     state: absent
 
-    - name: Create backend deployment
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-deploy-backend.yaml') | from_yaml }}"
-        state: present
+    # - name: Create backend deployment
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-deploy-backend.yaml') | from_yaml }}"
+    #     state: present
 
-    - name: Delete existing backend service
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-service-backend.yaml') | from_yaml }}"
-        state: absent
+    # - name: Delete existing backend service
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-service-backend.yaml') | from_yaml }}"
+    #     state: absent
 
-    - name: Create backend service
-      kubernetes.core.k8s:
-        kubeconfig: /path/to/your/kubeconfig
-        definition: "{{ lookup('file', './k8s-config/k8s-service-backend.yaml') | from_yaml }}"
-        state: present
+    # - name: Create backend service
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /path/to/your/kubeconfig
+    #     definition: "{{ lookup('file', './k8s-config/k8s-service-backend.yaml') | from_yaml }}"
+    #     state: present
