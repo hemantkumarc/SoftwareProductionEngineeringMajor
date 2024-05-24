@@ -3,8 +3,9 @@ pipeline {
 	agent any 
 	
 	environment {
-		DOCKER_IMAGE_NAME = 'calculator'
-		GITHUB_REPO_URL = 'https://github.com/hemantkumarc/SPE-MiniProject.git'
+		FRONTEND_DOCKER_IMAGE_NAME = 'frontend'
+        BACKEND_DOCKER_IMAGE_NAME = 'backend'
+		GITHUB_REPO_URL = 'https://github.com/hemantkumarc/SoftwareProductionEngineeringMajor.git'
 	}
 
 	stages {
@@ -20,43 +21,46 @@ pipeline {
 			}
 		}
 
-		stage('Build Code')
-		{
-			steps {
-				sh "javac calculator.java"
-			}
-		}
-
-
-		stage('Test Code')
+        stage('Test Code')
 		{
 			steps {
 				echo "Testing the code"
 			}
 		}
 
-		stage('Building Docker Image')
+		stage('Build Code')
+		{
+			steps {
+				echo "Building the code"
+			}
+		}
+
+		stage('Building Docker Images')
 		{
 			steps {
 
 				script {
-					docker.build("${DOCKER_IMAGE_NAME}", '.')
+                    sh "cd /frontend"
+					docker.build("${FRONTEND_DOCKER_IMAGE_NAME}", '.')
+                    sh "docker image tag ${FRONTEND_DOCKER_IMAGE_NAME} hemantkumarcpersonal/${FRONTEND_DOCKER_IMAGE_NAME}:latest"
+                    
+                    sh "cd /backend"
+                    docker.build("${BACKEND_DOCKER_IMAGE_NAME}", '.')
+                    sh "docker image tag ${BACKEND_DOCKER_IMAGE_NAME} hemantkumarcpersonal/${BACKEND_DOCKER_IMAGE_NAME}:latest"
 				}
-
 			}
 		}
 
-		stage('Pushing Docker Image')
+		stage('Pushing Docker Images')
 		{
 			steps {
 
 				script {
 
 					docker.withRegistry('', 'dockerhub-credentials') {
-
-						sh "docker image tag calculator hemantkumarcpersonal/calculator:latest"
-						sh "docker push hemantkumarcpersonal/calculator:latest"
-
+						// sh "docker image tag calculator hemantkumarcpersonal/calculator:latest"
+						sh "docker push hemantkumarcpersonal/${FRONTEND_DOCKER_IMAGE_NAME}:latest"
+                        sh "docker push hemantkumarcpersonal/${BACKEND_DOCKER_IMAGE_NAME}:latest"
 					}
 				}
 
@@ -72,8 +76,7 @@ pipeline {
 					ansiblePlaybook (
 
 						playbook: 'playbook.yml',
-						inventory: 'inventory'
-
+						inventory: 'inventory.ini'
 					)
 				}
 			}
