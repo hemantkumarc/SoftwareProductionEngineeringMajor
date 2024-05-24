@@ -3,7 +3,7 @@ pipeline {
 	agent any 
 
     tools {
-        googlecloudsdk 'gcloud'
+        gcloud 'gcloud'
     }
 	
 	environment {
@@ -21,7 +21,6 @@ pipeline {
 				script{
 					git branch: 'main', url: "${GITHUB_REPO_URL}"
 				}
-
 			}
 		}
 
