@@ -3,6 +3,18 @@
   hosts: localhost
   remote_user: hemant
   tasks:
+    - name: Ensure python3-pip is installed
+      package:
+        name: python3-pip
+        state: present
+
+    - name: Install required Python packages
+      pip:
+        name:
+          - google-auth
+          - kubernetes
+        executable: pip3
+  
     - name: Install required collections
       ansible.builtin.command:
         cmd: ansible-galaxy collection install kubernetes.core google.cloud
