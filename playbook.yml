@@ -3,7 +3,10 @@
   hosts: localhost
   remote_user: hemant
   tasks:
-
+    - name: Install required collections
+      ansible.builtin.command:
+        cmd: ansible-galaxy collection install kubernetes.core google.cloud
+      
     - name: Ensure GKE cluster is present
       google.cloud.gcp_container_cluster:
         name: coursemap-cluster-two
