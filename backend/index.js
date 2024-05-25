@@ -3,11 +3,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const logger = require('./logger');
 
 // Initialize Express app
 const app = express();
 
 // Middleware
+app.use((req, res, next) => {
+  logger.info(`Received request : ${req.method} ${req.url}`);
+  next(); 
+})
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -43,6 +49,7 @@ const User = mongoose.model('User', UserSchema);
 
 // Signup endpoint
 app.post('/signup', async (req, res) => {
+  logger.info('Received signup request')
   try {
     const { username, password, name } = req.body;
     // Create a new user
@@ -53,9 +60,11 @@ app.post('/signup', async (req, res) => {
     });
     // Save the user to the database
     await user.save();
+    logger.info(`User ${username} created successfully`);
     res.status(201).send('User created successfully');
   } catch (error) {
     console.error(error);
+    logger.error(`Error while creating user : ${err.message}`);
     res.status(500).send('Error creating user');
   }
 });
@@ -67,14 +76,17 @@ app.post('/login', async (req, res) => {
     // Find the user in the database
     const user = await User.findOne({ username });
     if (!user) {
+      logger.warn(`User ${username} not found`);
       return res.status(404).send('User not found');
     }
     // Compare passwords
     if (user.password !== password) {
+      logger.warn(`Incorrect password for user ${username}`);
       return res.status(401).send('Incorrect password');
     }
     res.status(200).send('Login successful');
   } catch (error) {
+    logger.error(`Error while logging in : ${err.message}`);
     console.error(error);
     res.status(500).send('Error logging in');
   }
