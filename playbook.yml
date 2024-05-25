@@ -42,7 +42,7 @@
     
     - name: Ensure that namespace is coursemap
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-namespace.yaml
         state: present
 
@@ -54,41 +54,41 @@
 
     - name: Delete existing backend configmap
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-backend-configmap.yaml
         state: absent
         namespace: coursemap
 
     # - name: Delete existing frontend configmap
     #   kubernetes.core.k8s:
-    #     kubeconfig: ~/config 
+    #     kubeconfig: ~/.kube/config 
     #     src: ./
     #     state: absent
 
     - name: Delete existing backend deployment
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-backend.yaml
         state: absent
         namespace: coursemap
 
     - name: Delete existing frontend deployment
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-frontend.yaml
         state: absent
         namespace: coursemap
 
     - name: Delete existing backend nodeport service
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-backend-nodeport.yaml
         state: absent
         namespace: coursemap
     
     - name: Delete existing frontend loadbalancer service
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-frontend.yaml
         state: absent
         namespace: coursemap
@@ -97,7 +97,7 @@
 
     # - name: Create backend secret
     #   kubernetes.core.k8s:
-    #     kubeconfig: ~/config
+    #     kubeconfig: ~/.kube/config
     #     src: ./
     #     state: present
     #     apply: yes
@@ -105,7 +105,7 @@
 
     - name: Create backend configmap
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-backend-configmap.yaml
         state: present
         apply: yes
@@ -113,7 +113,7 @@
 
     # - name: Create frontend configmap
     #   kubernetes.core.k8s:
-    #     kubeconfig: ~/config
+    #     kubeconfig: ~/.kube/config
     #     src: ./
     #     state: present
     #     apply: yes
@@ -121,7 +121,7 @@
 
     - name: Create backend deployment
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-backend.yaml
         state: present
         apply: yes
@@ -129,7 +129,7 @@
 
     - name: Create frontend deployment
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-frontend.yaml
         state: present
         apply: yes
@@ -137,7 +137,7 @@
 
     - name: Create backend nodeport service
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-backend-nodeport.yaml
         state: present
         apply: yes
@@ -145,7 +145,7 @@
     
     - name: Create existing frontend loadbalancer service
       kubernetes.core.k8s:
-        kubeconfig: ~/config
+        kubeconfig: ~/.kube/config
         src: ./kubernetes/coursemap-frontend.yaml
         state: present
         apply: yes
