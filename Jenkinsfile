@@ -1,10 +1,6 @@
 pipeline {
 
 	agent any 
-
-    tools {
-        gcloud 'gcloud'
-    }
 	
 	environment {
 		FRONTEND_DOCKER_IMAGE_NAME = 'frontend'
