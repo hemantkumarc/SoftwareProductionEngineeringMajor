@@ -6,6 +6,7 @@ pipeline {
 		FRONTEND_DOCKER_IMAGE_NAME = 'frontend'
         BACKEND_DOCKER_IMAGE_NAME = 'backend'
 		GITHUB_REPO_URL = 'https://github.com/hemantkumarc/SoftwareProductionEngineeringMajor.git'
+        PATH = "${env.PATH}:/var/lib/jenkins/google-cloud-sdk/bin"
 	}
 
 	stages {
@@ -61,6 +62,26 @@ pipeline {
 				}
 			}
 		}
+
+        stage('Setup Environment') {
+            steps {
+                script {
+                    // Ensure the Google Cloud SDK environment is sourced
+                    sh 'source /var/lib/jenkins/google-cloud-sdk/path.bash.inc'
+                    sh 'source /var/lib/jenkins/google-cloud-sdk/completion.bash.inc'
+                }
+            }
+        }
+
+         stage('Debug PATH') {
+            steps {
+                script {
+                    // Print the PATH for debugging
+                    sh 'echo $PATH'
+                }
+            }
+        }
+
 
 		stage('Run Ansible Playbook')
 		{
