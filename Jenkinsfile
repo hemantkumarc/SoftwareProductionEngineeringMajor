@@ -67,8 +67,10 @@ pipeline {
             steps {
                 script {
                     // Ensure the Google Cloud SDK environment is sourced
-                    sh 'source /var/lib/jenkins/google-cloud-sdk/path.bash.inc'
-                    sh 'source /var/lib/jenkins/google-cloud-sdk/completion.bash.inc'
+                    sh '''
+                        . /var/lib/jenkins/google-cloud-sdk/path.bash.inc
+                        . /var/lib/jenkins/google-cloud-sdk/completion.bash.inc
+                    '''
                 }
             }
         }
